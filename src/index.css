@@ -1,0 +1,355 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+:root {
+  --fg: #fff;
+  --bg: #0b1220;
+}
+* {
+  box-sizing: border-box;
+  font-family: "Montserrat";
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  color: var(--fg);
+  background: #2b6aa0;
+}
+
+/* Лэйаут */
+.shell {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  height: 100dvh; 
+  min-height: 100svh; 
+}
+.shell > * {
+  min-height: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* фон */
+.shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: center/cover no-repeat url("/wallpapers/sunny.png");
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* Текст слева снизу */
+.hero-content {
+  position: absolute;
+  left: 100px;
+  bottom: 100px;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: left;
+  gap: 20px;
+}
+.hero-content .temp {
+  font-size: clamp(72px, 16vh, 128px);
+  font-weight: 700;
+  line-height: 0.9;
+  display: flex;
+  align-items: center;
+}
+.hero-content .city {
+  font-size: clamp(28px, 7vh, 56px);
+  font-weight: 600;
+  max-width: 400px;
+}
+.hero-content .meta {
+  opacity: 0.9;
+  margin-top: 6px;
+  font-size: 16px;
+}
+.hero-content .cond {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  gap: 8px;
+
+}
+
+.icon {
+  color: white;
+  width: 60px;
+  height: 60px;
+  display: inline-block;
+}
+.icon::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: center/contain no-repeat;
+}
+
+/* Правая панель */
+.side {
+  color: #e9f1f7;
+  background: linear-gradient(
+    180deg,
+    rgba(17, 60, 101, 0.28),
+    rgba(17, 60, 101, 0.38)
+  );
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%); /* Safari */
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  background-clip: padding-box;
+}
+
+.side-inner {
+  --pad: clamp(16px, 4vw, 48px);
+  padding: var(--pad);
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.bottom {
+  margin-top: auto;
+}
+
+/* Поиск */
+.search-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-end;
+}
+.search {
+  position: relative;
+}
+.search input {
+  all: unset;
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 20px 0px 10px 5px;
+  margin-right: 10px;
+  color: #fff;
+}
+.search-input::placeholder {
+  color: #cfe1ef;
+  opacity: 0.8;
+}
+.search-clear {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border: 0;
+  background: transparent;
+  color: #cfe1ef;
+  cursor: pointer;
+  z-index: 1;
+}
+.search-clear:hover {
+  color: #fff;
+}
+
+.search-btn {
+  width: 54px;
+  height: 54px;
+  /* border-radius: 6px; */
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-clear:hover {
+  color: #fff;
+}
+
+.dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 8px);
+  background: rgba(23, 76, 120, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  max-height: 260px;
+  overflow: auto;
+  z-index: 50;
+  backdrop-filter: blur(6px);
+}
+.dropdown .empty {
+  padding: 10px 12px;
+  opacity: 0.85;
+}
+.dropdown button {
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dropdown button:hover,
+.dropdown button.active {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Список регионов */
+.region-list {
+  margin-top: 8px;
+  max-height: 350px;
+  overflow: auto;
+}
+.region-list ul {
+  display: grid;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.region-list li button {
+  width: 100%;
+  text-align: left;
+  font-size: 18px;
+  line-height: 1.25;
+  padding: 6px 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #cfe1ef95;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+.region-list li button:hover {
+  color: #fff;
+}
+
+/* Детали */
+.divider {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  margin: 22px 0;
+}
+.details h4 {
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+.details .row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.shell.theme--Sunny::before {
+  background-image: url("/wallpapers/sunny.png");
+}
+.shell.theme--Cloudy::before {
+  background-image: url("/wallpapers/cloudy.png");
+}
+.shell.theme--Rain::before {
+  background-image: url("/wallpapers/rain.png");
+}
+.shell.theme--Snow::before {
+  background-image: url("/wallpapers/snow.png");
+}
+.shell.theme--Storm::before {
+  background-image: url("/wallpapers/storm.png");
+}
+.shell.theme--Fog::before {
+  background-image: url("/wallpapers/fog.png");
+}
+
+
+
+.theme--Sunny .icon::before {
+  background-image: url("/icons/sunny.svg");
+}
+.theme--Cloudy .icon::before {
+  background-image: url("/icons/cloudy.svg");
+}
+.theme--Rain .icon::before {
+  background-image: url("/icons/rain.svg");
+}
+.theme--Snow .icon::before {
+  background-image: url("/icons/snow.svg");
+}
+.theme--Storm .icon::before {
+  background-image: url("/icons/storm.svg");
+}
+.theme--Fog .icon::before {
+  background-image: url("/icons/wind.svg");
+}
+
+@media (max-width: 900px) {
+  /* Сетка: hero сверху (1fr), панель ниже (auto) */
+  .shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    height: 100dvh; /* экранная высота */
+    min-height: 100svh;
+  }
+
+  /* Порядок и слои: hero над всем */
+  .hero {
+    order: -1;
+    z-index: 2;
+  }
+  .side {
+    order: 0;
+    z-index: 1;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  .side-inner {
+    padding: clamp(12px, 4vw, 20px);
+    gap: 12px;
+  }
+
+  /* Список не раздувает страницу */
+  .region-list {
+    max-height: 20svh;
+    overflow: auto;
+  }
+  .details .row {
+    padding: 8px 0;
+  }
+
+  /* Типографика героя компактная и не выходит за край */
+  .hero-content {
+    left: clamp(12px, 5vw, 24px);
+    bottom: clamp(12px, 6vh, 24px);
+  }
+  .hero-content .temp {
+    font-size: clamp(52px, 18vw, 88px);
+  }
+  .hero-content .city {
+    font-size: clamp(20px, 7vw, 40px);
+  }
+
+  /* Дропдаун поиска не «лезет» на hero */
+  .dropdown {
+    z-index: 5;
+  } /* ниже, чем hero (у hero z-index:2, но dropdown внутри .side) */
+}
